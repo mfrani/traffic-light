@@ -5,29 +5,20 @@ class Lights extends React.Component{
 constructor(props){
     super(props);
     this.state={
-        color:'black'
+        color: {
+            red: {color:'red'},
+            yellow: {color: 'black'},
+            green: {color: 'black'},
+            next: "yellow"
+        }
     }
-    this.toggleLight=this.toggleLight.bind(this);
-}
 
-toggleLight(){
-    if (this.state.color=='black'){
-        this.setState({
-            color:'red'
-        });
-    }
-    else{
-        this.setState({
-            color:'black'
-        });
-    }
-    
+    this.switchLight=this.switchLight.bind(this);
 }
-
 componentDidMount() {
     console.log("light component mounted...")
     this.interval = setInterval(
-      () => this.toggleLight(),
+      () => this.switchLight(),
       3000
     );
   }
@@ -36,16 +27,60 @@ componentDidMount() {
   }
 
 
+
+switchLight(){
+
+switch(this.state.next){
+    case('red'):
+     this.setState({
+        color: {
+            red: {color:'red'},
+            yellow: {color: 'black'},
+            green: {color: 'black'},
+            next: "yellow"
+        }
+     });
+     break;
+     case('yellow'):
+     this.setState({
+        color: {
+            red: {color:'black'},
+            yellow: {color: 'yellow'},
+            green: {color: 'black'},
+            next: "green"
+        }
+    });
+    break;
+    case('green'):
+    this.setState({
+        color: {
+            red: {color:'black'},
+            yellow: {color: 'black'},
+            green: {color: 'green'},
+            next: "red"
+        }
+    });
+    break;
+    default:
+    setTimeout(()=>{
+        this.switchLight();
+    },3000);
+
+}
+    
+}
+
+
+
+
 render(){
-    const redLightStyle={
-        color: this.state.color
-    }
+    
 
     return(
         <div>
-            <p style={redLightStyle}>RED LIGHT</p>
-            <p>YELLOW LIGHT</p>
-            <p>GREEN LIGHT</p>
+            <p style={this.state.color.red}>RED LIGHT</p>
+            <p p style={this.state.color.yellow}>YELLOW LIGHT</p>
+            <p p style={this.state.color.green}>GREEN LIGHT</p>
         </div>
     )
 }
