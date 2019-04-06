@@ -11,9 +11,17 @@ constructor(props){
 }
 
 toggleLight(){
-    this.setState({
-        color:'red'
-    });
+    if (this.state.color=='black'){
+        this.setState({
+            color:'red'
+        });
+    }
+    else{
+        this.setState({
+            color:'black'
+        });
+    }
+    
 }
 
 componentDidMount() {
